@@ -7,9 +7,13 @@ pragma solidity ^0.8.18;
 contract FundMe {
 
     uint256 public minimumUsd = 5e18;
+    address[] public funders;
+    mapping(address funder => uint256 amountFunded) public addressToAmountFunded;
 
     function fund() public payable {
         require(getConversionRate(msg.value) > minimumUsd, "Didn't send enough ETH");
+        funders.push(msg.sender);
+        addressToAmountFunded[msg.sender] = addressToAmountFunded[msg.sender] + msg.value;
     }
 
     // function withdraw() public {}
