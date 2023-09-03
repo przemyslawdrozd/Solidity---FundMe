@@ -43,6 +43,14 @@ contract FundMe {
         require(callSuccess, "Call failed");
     }
 
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
+    }
+
     modifier isOwner() {
         // require(i_owner == msg.sender, "Not owner!");
         if(msg.sender != i_owner) {
